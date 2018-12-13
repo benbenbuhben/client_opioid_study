@@ -1,0 +1,66 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.line-container {
+  display: inline-block;
+  float: left;
+  margin: 0px;
+  width: 45%;
+  height: 45%;
+}
+
+.bar-container {
+  float:left;
+  width: 50%;
+  height: 50%;
+  
+}
+
+.button-container {
+  text-align: center;
+}
+
+.button-container button {
+  margin-right:2em;
+}
+
+.map {
+  width: 100vw;
+  height: 100vh;
+}
+
+#page1 {
+  width: 100%;
+  height:100vh;
+  animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 1s;
+}
+
+.mapboxgl-map {
+  width: 70%;
+  margin: 0 auto;
+}
+
