@@ -22,6 +22,13 @@
   color: #61dafb;
 }
 
+.spinner{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  margin-top: 40vh;
+}
+
 .line-container {
   display: inline-block;
   float: left;
@@ -39,6 +46,7 @@
 
 .button-container {
   text-align: center;
+  /* margin-bottom:20px; */
 }
 
 .button-container button {
@@ -52,15 +60,166 @@
 
 #page1 {
   width: 100%;
-  height:100vh;
+  height: 100vh;
+  margin-top: 200px;
   animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
 	animation-duration: 1s;
 }
 
+#page2 {
+  height: calc(100vh - 200px);
+  overflow:scroll;
+  margin-top: 80px;
+  /* margin-bottom:40px; */
+}
+
+
+
+.scroll-up-button > svg {
+  fill:black !important;
+}
+
+.scroll-up-button:focus {
+  outline: none;
+}
+
+.scroll-up-button:hover {
+  opacity: 1 !important;
+}
+
+.header{
+  position: fixed;
+  top:0;
+  height: 200px;
+  width: 100%;
+  background-color: white;
+  z-index: 100000;
+}
+
+.header-tab{
+  font-family: 'Playfair Display', serif;
+  background-color: #08306b;
+  color:white;
+  font-weight: 700;
+  font-size: 40px;
+  position:fixed;
+  top:0;
+  z-index: 1000;
+  margin-left: 100px;
+  height:100px;
+  padding: 10px;
+  padding-top:55px;
+  margin-top:0px;
+}
+
+.hamburger-menu{
+  position: fixed;
+  top: 53px;
+  right: 95px;
+  z-index: 1000;
+}
+
+.page-title{
+  font-family: 'Adamina', serif;
+  width:100%;
+  margin:0 auto;
+  margin-top: 130px;
+  text-align: center;
+  font-size: 45px;
+}
+
+.subtitle{
+  font-family: 'Mukta', sans-serif;
+  letter-spacing: 2px;
+  color: gray;
+  width:100%;
+  margin:0 auto;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.map-header{
+  height:70px;
+  width: 70%;
+  margin: 30px auto;
+  margin-bottom:0px;
+  padding-bottom:0px;
+  background-color: #08306b;
+  border: 1px solid black;
+  border-bottom: none;
+  text-align: center;
+  padding-top:20px;
+}
+
+.map-header-text{
+  font-family: 'Adamina', serif;
+  color:white;
+  font-size:20px;
+  margin-left:25px;
+}
+
 .mapboxgl-map {
   width: 70%;
-  margin: 0 auto;
+  height: 60vh;
+  margin: 100px auto;
+  margin-top:0px;
+  border: 1px solid black;
 }
+
+.country-title{
+  font-family: 'Adamina', serif;
+  width:100%;
+  margin:0 auto;
+  margin-top:15px;
+  margin-bottom:15px;
+  text-align: center;
+  font-size: 35px;
+  z-index: 100000 !important;
+  color:#08306b;
+  /* text-decoration: underline; */
+}
+
+.sex-button{
+  font-family: 'Adamina', serif;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  border:1px solid #08306b;
+  background-color: white;
+  color: #08306b;
+}
+
+.sex-button:hover{
+  font-family: 'Adamina', serif;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  background-color: #9ecae1;
+  color: white;
+}
+
+.sex-button:focus{
+  font-family: 'Adamina', serif;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  background-color: #08306b;
+  color: white;
+  outline: none;
+}
+
+/* .map-container{
+  height:100%;
+  width:100%;
+} */
+
+/* font-family: 'Adamina', serif;
+font-family: 'Mukta', sans-serif;
+font-family: 'Playfair Display', serif; */
 

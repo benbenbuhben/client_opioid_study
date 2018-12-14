@@ -193,19 +193,24 @@ export default class Map extends Component {
     };
 
     return (
-      <div>
-        <div ref={el => this.mapContainer = el} className="absolute top right left bottom" />
-        <div className="toggle-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
-          {options.map(renderOptions)}
+      <React.Fragment>
+        <div className="map-header">
+        <h2 className="map-header-text">Select a country to view its infographic.</h2>
         </div>
-        <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180">
-          <div className='mb6'>
-            <h2 className="txt-bold txt-s block">{name}</h2>
-            <p className='txt-s color-gray'>{description}</p>
+        <div ref={el => this.mapContainer = el} className="relative">
+
+          <div className="toggle-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
+            {options.map(renderOptions)}
           </div>
-          {stops.map(renderLegendKeys)}
+          <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180">
+            <div className='mb6'>
+              <h2 className="txt-bold txt-s block">{name}</h2>
+              <p className='txt-s color-gray'>{description}</p>
+            </div>
+            {stops.map(renderLegendKeys)}
+          </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
