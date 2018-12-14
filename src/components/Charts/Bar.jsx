@@ -21,16 +21,32 @@ export default class Bar extends Component {
   }
   
   render() {
+    let label_text;
     let {top_countries} = this.state;
+    let {country, country_data} = this.props;
     
-    top_countries = top_countries.filter(el => el.sex_id === 3).sort((a,b) => (parseFloat(a.val) > parseFloat(b.val)) ? 1 : ((parseFloat(b.val) > parseFloat(a.val)) ? -1 : 0)); 
-    console.log(top_countries.filter(el=>el.sex_id === 3).map(el=>el.location_name).reverse());
+    country_data = country_data.filter(el=> el.year === 2017 && el.sex_id === 3)[0];
 
-    if(top_countries.length){
+    top_countries = top_countries.filter(el => el.sex_id === 3).sort((a,b) => (parseFloat(a.val) > parseFloat(b.val)) ? 1 : ((parseFloat(b.val) > parseFloat(a.val)) ? -1 : 0)); 
+    let top_countries_as_list = top_countries.filter(el=>el.sex_id === 3).map(el=>el.location_name).reverse();
+
+    if(country && !top_countries_as_list.includes(country)){
+      top_countries.push(country_data);
+      label_text = "IN RELATION TO TOP 25 (MEN & WOMEN)" 
+    }
+    else if (country){
+      top_countries = top_countries.filter(el => el.location_name !== country);
+      top_countries.push(country_data);
+      label_text = "DEATHS FROM OPIOID USE WORLDWIDE (TOP 25, MEN & WOMEN)" 
+    }
+
+    let num_countries = top_countries.length;
+
+    if(num_countries && top_countries){
       return (
         <div className="bar-container">
           <VictoryChart  
-            domain={{ x: [0, 15], y: [0.5, 25] }} 
+            domain={{ x: [0, 15], y: [0.5, num_countries] }} 
             domainPadding={{ x: 0, y: 10 }} 
             padding={{left: 100, bottom:50, top:50}}
             width={600} height={400}
@@ -39,7 +55,7 @@ export default class Bar extends Component {
             }}
           >
             <VictoryLabel 
-              text="DEATHS FROM OPIOID USE WORLDWIDE  (TOP 25)" 
+              text={label_text}
               dx={180}
               x={150} 
               y={30} 

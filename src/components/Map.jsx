@@ -21,21 +21,6 @@ const options = [{
     [8, '#08519c'],
     [16, '#08306b'],
   ],
-}, {
-  name: 'GDP',
-  description: 'Estimate total GDP in millions of dollars',
-  property: 'gdp_md_est',
-  stops: [
-    [0, '#f8d5cc'],
-    [1000, '#f4bfb6'],
-    [5000, '#f1a8a5'],
-    [10000, '#ee8f9a'],
-    [50000, '#ec739b'],
-    [100000, '#dd5ca8'],
-    [250000, '#c44cc0'],
-    [5000000, '#9f43d7'],
-    [10000000, '#6e40e6'],
-  ],
 }];
 
 export default class Map extends Component {
@@ -199,9 +184,9 @@ export default class Map extends Component {
         </div>
         <div ref={el => this.mapContainer = el} className="relative">
 
-          <div className="toggle-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
+          {/* <div className="toggle-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
             {options.map(renderOptions)}
-          </div>
+          </div> */}
           <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180">
             <div className='mb6'>
               <h2 className="txt-bold txt-s block">{name}</h2>
