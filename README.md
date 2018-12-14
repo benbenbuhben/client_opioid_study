@@ -56,10 +56,10 @@ In a terminal instance:
 
 12-12-2018 11:31am - API endpoint integration functional. D3-based charts successfully rendering.
 
-12-13-2018 5:45pm - Map successfully rendering with opioid stats data layer.
+12-12-2018 5:45pm - Map successfully rendering with opioid stats data layer.
 
-12-14-2018 09:31pm - Styling complete
+12-13-2018 09:31pm - Styling complete
 
-12-14-2018 10:40pm - Deployed to AWS S3.
+12-13-2018 10:40pm - Deployed to AWS S3.
 
 [Back to top](#top)
