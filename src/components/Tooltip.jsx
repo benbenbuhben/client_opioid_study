@@ -4,7 +4,7 @@ import propTypes from 'prop-types'
 export default class Tooltip extends React.Component {
 
   static propTypes = {
-    features: propTypes.array.isRequired
+    features: propTypes.array.isRequired,
   };
 
   render() {
