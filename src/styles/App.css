@@ -31,7 +31,6 @@
 
 .line-container {
   display: inline-block;
-  float: left;
   margin: 0px;
   width: 45%;
   height: 45%;
@@ -41,12 +40,10 @@
   float:left;
   width: 50%;
   height: 50%;
-  
 }
 
 .button-container {
   text-align: center;
-  /* margin-bottom:20px; */
 }
 
 .button-container button {
@@ -74,8 +71,6 @@
   margin-top: 80px;
   /* margin-bottom:40px; */
 }
-
-
 
 .scroll-up-button > svg {
   fill:black !important;
@@ -179,7 +174,6 @@
   font-size: 35px;
   z-index: 100000 !important;
   color:#08306b;
-  /* text-decoration: underline; */
 }
 
 .sex-button{
@@ -213,13 +207,3 @@
   color: white;
   outline: none;
 }
-
-/* .map-container{
-  height:100%;
-  width:100%;
-} */
-
-/* font-family: 'Adamina', serif;
-font-family: 'Mukta', sans-serif;
-font-family: 'Playfair Display', serif; */
-

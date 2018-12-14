@@ -9,7 +9,6 @@ export default class Bar extends Component {
     this.state = {
       top_countries: [],
     };
-
   }
 
   componentDidMount(){
@@ -28,6 +27,7 @@ export default class Bar extends Component {
     country_data = country_data.filter(el=> el.year === 2017 && el.sex_id === 3)[0];
 
     top_countries = top_countries.filter(el => el.sex_id === 3).sort((a,b) => (parseFloat(a.val) > parseFloat(b.val)) ? 1 : ((parseFloat(b.val) > parseFloat(a.val)) ? -1 : 0)); 
+    
     let top_countries_as_list = top_countries.filter(el=>el.sex_id === 3).map(el=>el.location_name).reverse();
 
     if(country && !top_countries_as_list.includes(country)){

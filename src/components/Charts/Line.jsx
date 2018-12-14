@@ -10,10 +10,10 @@ export default class Line extends Component {
       sex_id: 3,
     };
 
-    this.handleSexChange = this.handleSexChange.bind(this);
+    this.handleSexSelect = this.handleSexSelect.bind(this);
   }
 
-  handleSexChange(e) {
+  handleSexSelect(e) {
     const sex_id = parseInt(e.target.id);
     this.setState({sex_id});
   }
@@ -24,7 +24,9 @@ export default class Line extends Component {
     const world_data_by_sex = world_data.filter(el => el.sex_id === this.state.sex_id);
     const sex = country_data_by_sex.length ? country_data_by_sex[0]['sex_id'] : '';
     const sex_text = sex === 1 ? 'Men' : (sex === 2 ? 'Women' : 'Both Men & Women');
+
     const country_name = country_data_by_sex.length ? country_data_by_sex[0]['location_name'].concat(' Opioid Deaths (1990-2017)\n' + '\n for ').concat(sex_text).toUpperCase() : '';
+
     const max_domain_country = Math.max.apply(Math, country_data.filter(el => el.sex_id === 1).map(el=>el.upper));
     const max_domain_world = Math.max.apply(Math, world_data.filter(el => el.sex_id === 1).map(el=>el.upper));
     const max_domain = Math.max(max_domain_country, max_domain_world);
@@ -79,9 +81,7 @@ export default class Line extends Component {
               data: { stroke: '#4292c6' },
               parent: { border: '1px solid #4292c6'},
             }}
-            
             data={country_data_by_sex.map(el => ({x: new Date(el.year, 1, 1), y: +el.val}))}
-            
           />
           <VictoryArea
             data={country_data_by_sex.map(el => ({x: new Date(el.year, 1, 1), y: +el.upper, y0: +el.lower}))}
@@ -100,9 +100,9 @@ export default class Line extends Component {
           />
         </VictoryChart>
         <div className="button-container">
-          <button className="sex-button" onClick={this.handleSexChange} id="1">Male</button>
-          <button className="sex-button" onClick={this.handleSexChange} id="2">Female</button>
-          <button className="sex-button" onClick={this.handleSexChange} id="3">Both</button>
+          <button className="sex-button" onClick={this.handleSexSelect} id="1">Male</button>
+          <button className="sex-button" onClick={this.handleSexSelect} id="2">Female</button>
+          <button className="sex-button" onClick={this.handleSexSelect} id="3">Both</button>
         </div>
       </div>
     );

@@ -1,44 +1,65 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<a id="top"></a>
 
-## Available Scripts
+# Opioid Study Client
 
-In the project directory, you can run:
+**Author**: Ben Hurst
 
-### `npm start`
+**Version**: 0.1.0
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Live Site**: http://ihme-opioid-study.s3-website-us-west-2.amazonaws.com/
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+**Live Server**: http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com
 
-### `npm test`
+**Back-end GitHub Repo:** https://github.com/benbenbuhben/opioid_study_api
+___
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Table of contents
 
-### `npm run build`
+* [Overview](#overview)
+* [Getting Started](#getting-started)
+* [Change Log](#change-log)
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+___
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+<a id="overview"></a>
+## Overview
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Interactive and dynamic data visualization tool using Mapbox GL and D3 (VictoryJS) to help understand the world's opioid epidemic.
 
-### `npm run eject`
+**Key Features:**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* React.js components configured to consume [opioid_study_api](https://github.com/benbenbuhben/opioid_study_api) endpoints. World and Country statistics are dynamically loaded with current data from API call.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* Interactive map rendered using [Mapbox GL](https://www.mapbox.com/mapbox-gl-js/api/) and a custom GeoJSON modification/generation script (assets/modify_geojson.py).
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* Charts enabled by [VictoryJS](https://formidable.com/open-source/victory/).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+___
 
-## Learn More
+<a id="getting-started"></a>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Getting Started in Development (using yarn)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+In a terminal instance:
+
+1. ```git clone https://github.com/benbenbuhben/client_opioid_study.git```
+2. ```cd client_opioid_study/```
+3. ```yarn install``` to install required dependencies.
+4. ```touch env``` and add your Mapbox access key as REACT_APP_MAPBOX_ACCESS_TOKEN.
+5. ```yarn start```
+
+<a id="change-log"></a> 
+
+## Change Log
+
+12-11-2018 4:00pm - Initial Scaffolding.
+
+12-12-2018 11:31am - API endpoint integration functional. D3-based charts successfully rendering.
+
+12-13-2018 5:45pm - Map successfully rendering with opioid stats data layer.
+
+12-14-2018 09:31pm - Styling complete
+
+12-14-2018 10:40pm - Deployed to AWS S3.
+
+[Back to top](#top)

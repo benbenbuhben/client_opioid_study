@@ -5,8 +5,6 @@ from pprint import pprint
 with open('./data.json') as f:
     data = json.load(f)
 
-# pprint(data['features'])
-
 csv_data = pd.read_csv(
     './IHME-GBD_2017_DATA-37d305ef-1.csv',
     error_bad_lines=False
@@ -14,8 +12,6 @@ csv_data = pd.read_csv(
 df = pd.DataFrame(csv_data)
 
 df_country = df[(df['location_name'] == 'Afghanistan') & (df['year'] == 2017)]
-
-failed = []
 
 # The following block of code attempts every name possibility. There are 6 missing from our dataset. 
 # There are 177 countries in the geojson file. So 171 will be painted in the map.
@@ -29,7 +25,6 @@ for country in dataset:
 
     while error:
         if name_index == len(country_name_fields):
-            # failed.append(country_name)
             break
         
         try:
@@ -52,5 +47,3 @@ data['features'] = dataset
 with open('./modified_data.json', 'w') as outfile:
     json.dump(data, outfile)
     
-# pprint(dataset[0]) 
-# pprint(failed)

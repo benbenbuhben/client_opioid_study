@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
 import '../styles/App.css';
 import superagent from 'superagent';
-import Line from './Charts/Line';
-import Bar from './Charts/Bar';
 import Map from './Map';
-import Charts from './Charts';
+import Infographic from './Infographic';
 import HamburgerMenu from 'react-hamburger-menu';
 import { ClipLoader } from 'react-spinners';
-
 
 export default class App extends Component {
   constructor(props) {
@@ -22,17 +19,7 @@ export default class App extends Component {
     this.fetchCountryData = this.fetchCountryData.bind(this);
   }
 
-  // Bad to set state twice. Either chain get calls, or use async/await.
-  // Also make call for top_countries here. Look into mobx.
   componentDidMount() {
-    // if(!(this.state.world_data.length)){this.setState({loading:true});}
-    // superagent.get('http://127.0.0.1:8000/api/v1/country/102')
-    // superagent.get('http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com/api/v1/country/102')
-    //   .then(res => {
-    //     const country_data = res.body;
-    //     this.setState({country_data});
-    //   });
-
     superagent.get('http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com/api/v1/world')
       .then(res => {
         const world_data = res.body;
@@ -52,17 +39,6 @@ export default class App extends Component {
   render() {
     const {country_data, world_data} = this.state;
     const country = country_data.length ? country_data[0]['location_name'] : '';
-
-    // let charts = country_data.length ?
-    // <section id="page2">
-    //   <Charts 
-    //     country_data={country_data}
-    //     country={country}
-    //     world_data={world_data}
-    //   />
-    //   </section>
-    //   : null;
-
 
     if(this.state.loading){
       return(
@@ -99,13 +75,12 @@ export default class App extends Component {
             <Map fetchCountryData={this.fetchCountryData}/>
           </section>
           <section id="page2">
-            <Charts 
+            <Infographic
               country_data={country_data}
               country={country}
               world_data={world_data}
             />
-          </section>
-          
+          </section>        
         </div>
       );
     }

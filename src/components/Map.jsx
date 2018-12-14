@@ -4,14 +4,13 @@ import mapboxgl from 'mapbox-gl';
 import data from '../assets/modified_data.json';
 import Tooltip from './Tooltip';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const options = [{
   name: 'Opioid Death Rate',
   description: 'Deaths per 100,000',
   property: 'opioid_rate_both',
   stops: [
-    // [0, '#f7fbff'],
     [0, '#deebf7'],
     [0.25, '#c6dbef'],
     [0.5, '#9ecae1'],
@@ -29,7 +28,6 @@ export default class Map extends Component {
     this.state = {
       active: options[0],
     };
-
   }
 
   setTooltip(features) {
@@ -44,15 +42,9 @@ export default class Map extends Component {
       );
       this.tooltipContainer.style.display = 'block';
     } else {
-      // this.tooltipContainer.innerHTML = '';
-      // this.tooltipContainer.style.display = 'none';
       ReactDOM.unmountComponentAtNode(this.tooltipContainer);
     }
   }
-
-  // componentDidUpdate() {
-  //   this.setFill();
-  // }
 
   componentDidMount() {
     // Listen and wait for component to mount
@@ -62,7 +54,6 @@ export default class Map extends Component {
 
   setup() {
     this.hoveredStateId =  null;
-    // Load JS library with token and create JS instance
     this.tooltipContainer = document.createElement('div');
 
     this.map = new mapboxgl.Map({
@@ -82,22 +73,9 @@ export default class Map extends Component {
         id: 'countries',
         type: 'fill',
         source: 'countries',
-      }); // ID metches `mapbox/streets-v9`
+      });
 
-      //   this.map.addLayer({
-      //     "id": "country-fills",
-      //     "type": "fill",
-      //     "source": "countries",
-      //     "layout": {},
-      //     "paint": {
-      //         "fill-color": "#627BC1",
-      //         "fill-opacity": ["case",
-      //             ["boolean", ["feature-state", "hover"], false],
-      //             1,
-      //             0.5
-      //         ]
-      //     }
-      // });
+
 
       this.map.addLayer({
         'id': 'country-borders',
@@ -109,25 +87,6 @@ export default class Map extends Component {
           'line-width': 1,
         },
       });
-
-      //   this.map.on("mousemove", "country-fills", function(e) {
-      //     if (e.features.length > 0) {
-      //         if (this.hoveredStateId) {
-      //             this.map.setFeatureState({source: 'countries', id: this.hoveredStateId}, { hover: false});
-      //         }
-      //         this.hoveredStateId = e.features[0].id;
-      //         this.map.setFeatureState({source: 'countries', id: this.hoveredStateId}, { hover: true});
-      //     }
-      // });
-
-      // // When the mouse leaves the state-fill layer, update the feature state of the
-      // // previously hovered feature.
-      // this.map.on("mouseleave", "country-fills", function() {
-      //     if (this.hoveredStateId) {
-      //         this.map.setFeatureState({source: 'countries', id: this.hoveredStateId}, { hover: false});
-      //     }
-      //     this.hoveredStateId =  null;
-      // });
 
       this.setFill();
     });
@@ -184,9 +143,6 @@ export default class Map extends Component {
         </div>
         <div ref={el => this.mapContainer = el} className="relative">
 
-          {/* <div className="toggle-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
-            {options.map(renderOptions)}
-          </div> */}
           <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180">
             <div className='mb6'>
               <h2 className="txt-bold txt-s block">{name}</h2>
