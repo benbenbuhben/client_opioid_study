@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
-import data from '../assets/modified_data.json';
+import data from '../assets/modified_data_2.json';
 import Tooltip from './Tooltip';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const options = [{
-  name: 'Opioid Death Rate',
-  description: 'Deaths per 100,000',
+  name: 'Opioid Deaths (2017)',
+  description: 'per 100,000',
   property: 'opioid_rate_both',
   stops: [
-    [0, '#deebf7'],
-    [0.25, '#c6dbef'],
-    [0.5, '#9ecae1'],
-    [1, '#6baed6'],
-    [2, '#4292c6'],
-    [4, '#2171b5'],
-    [8, '#08519c'],
-    [16, '#08306b'],
+    [0, '#f7fbff'],
+    [0.25, '#deebf7'],
+    [0.5, '#c6dbef'],
+    [1, '#9ecae1'],
+    [2, '#6baed6'],
+    [4, '#4292c6'],
+    [8, '#2171b5'],
+    [16, '#08519c'],
   ],
 }];
 
@@ -27,6 +27,7 @@ export default class Map extends Component {
     super(props);
     this.state = {
       active: options[0],
+      hoveredCountryId:  null,
     };
   }
 
@@ -53,14 +54,14 @@ export default class Map extends Component {
   }
 
   setup() {
-    this.hoveredStateId =  null;
+    // this.hoveredCountryId =  null;
     this.tooltipContainer = document.createElement('div');
 
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/light-v9',
       center: [5, 34],
-      zoom: 1.5,
+      zoom: 1,
     });
 
     this.map.on('load', () => {
@@ -76,6 +77,28 @@ export default class Map extends Component {
       });
 
 
+      this.map.style.stylesheet.layers.forEach(layer => {
+        if (layer['source-layer'] === 'place_label' || layer['source-layer'] === 'country_label') {
+          this.map.removeLayer(layer.id);
+        }
+      });
+
+      // The feature-state dependent fill-opacity expression will render the hover effect
+      // when a feature's hover state is set to true.
+      this.map.addLayer({
+        'id': 'country-fills',
+        'type': 'fill',
+        'source': 'countries',
+        'layout': {},
+        'paint': {
+          'fill-color': '#08306b',
+          'fill-opacity': ['case',
+            ['boolean', ['feature-state', 'hover'], false],
+            1,
+            0,
+          ],
+        },
+      });
 
       this.map.addLayer({
         'id': 'country-borders',
@@ -83,16 +106,23 @@ export default class Map extends Component {
         'source': 'countries',
         'layout': {},
         'paint': {
-          'line-color': '#627BC1',
-          'line-width': 1,
+          'line-color': 'black',
+          'line-width': 1.4,
+          'line-opacity': ['case',
+            ['boolean', ['feature-state', 'hover'], false],
+            0.9,
+            0.2,
+          ],
         },
       });
+
+      
 
       this.setFill();
     });
 
     const tooltip = new mapboxgl.Marker(this.tooltipContainer, {
-      offset: [-120, 0],
+      offset: [-50, 0],
     }).setLngLat([0,0]).addTo(this.map);
     
     this.map.on('mousemove', e => {
@@ -105,6 +135,31 @@ export default class Map extends Component {
     this.map.on('click', e => {
       const features = this.map.queryRenderedFeatures(e.point);
       this.props.fetchCountryData(features[0].properties.opioid_data_location_id);
+    });
+
+    // When the user moves their mouse over the state-fill layer, we'll update the
+    // feature state for the feature under the mouse.
+    this.map.on('mousemove', 'country-fills', e => {
+      if (e.features.length > 0) {
+        if (this.state.hoveredCountryId) {
+          // console.log(this.state.hoveredCountryId);
+          this.map.setFeatureState({source: 'countries', id: this.state.hoveredCountryId}, { hover: false});
+        }
+        // console.log(e);
+        let hoveredCountryId = e.features[0].id;
+        this.setState({hoveredCountryId});
+        this.map.setFeatureState({source: 'countries', id: this.state.hoveredCountryId}, { hover: true});
+      }
+    });
+
+    // When the mouse leaves the state-fill layer, update the feature state of the
+    // previously hovered feature.
+    this.map.on('mouseleave', 'country-fills', () => {
+      if (this.state.hoveredCountryId) {
+        this.map.setFeatureState({source: 'countries', id: this.state.hoveredCountryId}, { hover: false});
+      }
+      let hoveredCountryId = null;
+      this.setState({hoveredCountryId});
     });
   }
 
@@ -139,7 +194,7 @@ export default class Map extends Component {
     return (
       <React.Fragment>
         <div className="map-header">
-        <h2 className="map-header-text">Select a country to view its infographic.</h2>
+          <h2 className="map-header-text">Click on a country to view its infographic.</h2>
         </div>
         <div ref={el => this.mapContainer = el} className="relative">
 

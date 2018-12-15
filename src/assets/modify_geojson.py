@@ -39,11 +39,12 @@ for country in dataset:
             country['properties']['opioid_rate_female'] = opioid_rate_female
             country['properties']['opioid_rate_both'] = opioid_rate_both
             country['properties']['opioid_data_location_id'] = str(opioid_data_location_id)
+            country['id'] = opioid_data_location_id = int(df_country[(df['sex_id'] == 3)].iloc[0]['location_id'])
             error = False
         except IndexError:
             name_index += 1
 
 data['features'] = dataset
-with open('./modified_data.json', 'w') as outfile:
+with open('./modified_data_2.json', 'w') as outfile:
     json.dump(data, outfile)
     

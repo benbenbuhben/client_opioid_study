@@ -65,6 +65,15 @@
 	animation-duration: 1s;
 }
 
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
 #page2 {
   height: calc(100vh - 200px);
   overflow:scroll;
@@ -197,7 +206,7 @@
   color: white;
 }
 
-.sex-button:focus{
+.sex-button-focused{
   font-family: 'Adamina', serif;
   letter-spacing: 1.5px;
   text-align: center;
