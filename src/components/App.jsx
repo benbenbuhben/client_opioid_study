@@ -5,6 +5,7 @@ import Map from './Map';
 import Infographic from './Infographic';
 import HamburgerMenu from 'react-hamburger-menu';
 import { ClipLoader } from 'react-spinners';
+import { CSSTransition } from 'react-transition-group';
 
 export default class App extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ export default class App extends Component {
       .then(res => {
         const world_data = res.body;
         this.setState({world_data});
-        this.setState({loading:false});
+        this.setState({loading: false});
       });
   }
 
@@ -72,7 +73,14 @@ export default class App extends Component {
             <h2 className="subtitle">FINDINGS FROM THE GLOBAL BURDEN OF DISEASE STUDY</h2>
           </header>
           <section id="page1">
-            <Map fetchCountryData={this.fetchCountryData}/>
+            <CSSTransition
+              classNames="results"
+              in={true}
+              appear={true}
+              timeout={500}
+            >
+              <Map className="results" fetchCountryData={this.fetchCountryData}/>
+            </CSSTransition>
           </section>
           <section id="page2">
             <Infographic

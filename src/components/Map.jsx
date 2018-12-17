@@ -3,23 +3,38 @@ import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 import data from '../assets/modified_data_2.json';
 import Tooltip from './Tooltip';
+import { CSSTransition } from 'react-transition-group';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
+const colorScale = [
+  [0, '#f7fbff'],
+  [0.25, '#deebf7'],
+  [0.5, '#c6dbef'],
+  [1, '#9ecae1'],
+  [2, '#6baed6'],
+  [4, '#4292c6'],
+  [8, '#2171b5'],
+  [16, '#08519c'],
+];
+
 const options = [{
-  name: 'Opioid Deaths (2017)',
-  description: 'per 100,000',
+  name: 'Both',
+  description: 'Deaths per 100,000',
   property: 'opioid_rate_both',
-  stops: [
-    [0, '#f7fbff'],
-    [0.25, '#deebf7'],
-    [0.5, '#c6dbef'],
-    [1, '#9ecae1'],
-    [2, '#6baed6'],
-    [4, '#4292c6'],
-    [8, '#2171b5'],
-    [16, '#08519c'],
-  ],
+  stops: colorScale,
+}, 
+{
+  name: 'Male',
+  description: 'Deaths per 100,000',
+  property: 'opioid_rate_male',
+  stops: colorScale,
+},
+{
+  name: 'Female',
+  description: 'Deaths per 100,000',
+  property: 'opioid_rate_female',
+  stops: colorScale,
 }];
 
 export default class Map extends Component {
@@ -47,14 +62,13 @@ export default class Map extends Component {
     }
   }
 
-  componentDidMount() {
-    // Listen and wait for component to mount
-    // and for window to be ready before initializing map
-    window.addEventListener('load', this.setup());
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.active !== prevState.active){
+      this.setFill();
+    }
   }
 
-  setup() {
-    // this.hoveredCountryId =  null;
+  componentDidMount() {
     this.tooltipContainer = document.createElement('div');
 
     this.map = new mapboxgl.Map({
@@ -75,7 +89,6 @@ export default class Map extends Component {
         type: 'fill',
         source: 'countries',
       });
-
 
       this.map.style.stylesheet.layers.forEach(layer => {
         if (layer['source-layer'] === 'place_label' || layer['source-layer'] === 'country_label') {
@@ -116,8 +129,6 @@ export default class Map extends Component {
         },
       });
 
-      
-
       this.setFill();
     });
 
@@ -142,10 +153,8 @@ export default class Map extends Component {
     this.map.on('mousemove', 'country-fills', e => {
       if (e.features.length > 0) {
         if (this.state.hoveredCountryId) {
-          // console.log(this.state.hoveredCountryId);
           this.map.setFeatureState({source: 'countries', id: this.state.hoveredCountryId}, { hover: false});
         }
-        // console.log(e);
         let hoveredCountryId = e.features[0].id;
         this.setState({hoveredCountryId});
         this.map.setFeatureState({source: 'countries', id: this.state.hoveredCountryId}, { hover: true});
@@ -191,21 +200,34 @@ export default class Map extends Component {
       );
     };
 
+    const renderedMap = <div ref={el => this.mapContainer = el} className="relative">
+      <div className="toggle-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
+        {options.map(renderOptions)}
+      </div>
+      <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180">
+        <div className='mb6'>
+          <h2 className="txt-bold txt-s block">{name === 'Both' ? name + ' Sexes' : name } (2017)</h2>
+          <p className='txt-s color-gray'>{description}</p>
+        </div>
+        {stops.map(renderLegendKeys)}
+      </div>
+    </div>;
+
     return (
       <React.Fragment>
         <div className="map-header">
           <h2 className="map-header-text">Click on a country to view its infographic.</h2>
         </div>
-        <div ref={el => this.mapContainer = el} className="relative">
+        <CSSTransition
+          classNames="results"
+          in={true}
+          appear={true}
+          timeout={500}
+        >
+          {renderedMap}
+        </CSSTransition>
+        
 
-          <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180">
-            <div className='mb6'>
-              <h2 className="txt-bold txt-s block">{name}</h2>
-              <p className='txt-s color-gray'>{description}</p>
-            </div>
-            {stops.map(renderLegendKeys)}
-          </div>
-        </div>
       </React.Fragment>
     );
   }

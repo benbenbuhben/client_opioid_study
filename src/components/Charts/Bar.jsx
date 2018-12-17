@@ -27,13 +27,13 @@ export default class Bar extends Component {
     const country_data_by_sex = country_data.filter(el => el.sex_id === this.props.sex_id);
     
     const sex = country_data_by_sex.length ? country_data_by_sex[0]['sex_id'] : '';
-    const sex_text = sex === 1 ? 'Men' : (sex === 2 ? 'Women' : 'Men & Women');
+    const sex_text = sex === 1 ? 'Men' : (sex === 2 ? 'Women' : 'Both Sexes');
 
     country_data = country_data.filter(el=> el.year === 2017 && el.sex_id === this.props.sex_id)[0];
 
     top_countries = top_countries.filter(el => el.sex_id === this.props.sex_id).sort((a,b) => (parseFloat(a.val) > parseFloat(b.val)) ? 1 : ((parseFloat(b.val) > parseFloat(a.val)) ? -1 : 0)); 
 
-    let top_countries_as_list = top_countries.filter(el => this.props.sex_id).map(el => el.location_name).reverse();
+    let top_countries_as_list = top_countries.filter(el => el.sex_id === this.props.sex_id).map(el => el.location_name).reverse();
 
 
     if(country && !top_countries_as_list.includes(country)){
@@ -43,7 +43,7 @@ export default class Bar extends Component {
     else if (country){
       top_countries = top_countries.filter(el => el.location_name !== country);
       top_countries.push(country_data);
-      label_text = `DEATHS FROM OPIOID USE WORLDWIDE (TOP 25, ${sex_text.toUpperCase()})`; 
+      label_text = `IN RELATION TO TOP 25 ( ${sex_text.toUpperCase()})`; 
     }
 
     let num_countries = top_countries.length;

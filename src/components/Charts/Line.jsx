@@ -6,24 +6,15 @@ export default class Line extends Component {
   constructor(props){
     super(props);
 
-    // this.state = {
-    //   sex_id: 3,
-    // };
-
-    // this.handleSexSelect = this.handleSexSelect.bind(this);
   }
 
-  // handleSexSelect(e) {
-  //   const sex_id = parseInt(e.target.id);
-  //   this.setState({sex_id});
-  // }
 
   render() {
     const {country_data, world_data, country} = this.props;
     const country_data_by_sex = country_data.filter(el => el.sex_id === this.props.sex_id);
     const world_data_by_sex = world_data.filter(el => el.sex_id === this.props.sex_id);
     const sex = country_data_by_sex.length ? country_data_by_sex[0]['sex_id'] : '';
-    const sex_text = sex === 1 ? 'Men' : (sex === 2 ? 'Women' : 'Both Men & Women');
+    const sex_text = sex === 1 ? 'Men' : (sex === 2 ? 'Women' : 'Both Sexes');
 
     const country_name = country_data_by_sex.length ? country_data_by_sex[0]['location_name'].concat(' Opioid Deaths (1990-2017)\n' + '\n for ').concat(sex_text).toUpperCase() : '';
 

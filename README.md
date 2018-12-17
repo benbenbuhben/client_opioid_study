@@ -62,4 +62,6 @@ In a terminal instance:
 
 12-14-2018 10:40pm - Deployed to AWS S3.
 
+12-16-2018 08:01pm - Updated tooltip. Added toggle for Male, Female.
+
 [Back to top](#top)
