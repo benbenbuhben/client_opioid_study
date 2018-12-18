@@ -21,15 +21,12 @@ export default class Infographic extends Component {
     scrollToComponent(resultHeadingScroll, { offset: -10, align: 'top', duration: 900});
   }
 
-  
   handleSexSelect(e) {
     const sex_id = parseInt(e.target.id);
     this.setState({sex_id});
   }
 
   render() {
-
-    const {sex_id} = this.state.sex_id;
 
     const scrollButtonStyle = {
       display: 'block',

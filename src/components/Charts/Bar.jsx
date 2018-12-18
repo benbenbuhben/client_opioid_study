@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { VictoryChart, VictoryAxis,  VictoryLabel, VictoryBar } from 'victory';
 import superagent from 'superagent';
 
+
+// Convert this to a stateless (function-based) component. Move componentDidMount call to app and pass down as props.
 export default class Bar extends Component {
   constructor(props) {
     super(props);

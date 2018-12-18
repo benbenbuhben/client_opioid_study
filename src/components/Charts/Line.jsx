@@ -2,24 +2,20 @@ import React, { Component } from 'react';
 import '../../styles/App.css';
 import { VictoryChart, VictoryAxis, VictoryLine, VictoryLegend, VictoryLabel, VictoryArea } from 'victory';
 
+// Convert this to a stateless (function-based) component.
 export default class Line extends Component {
-  constructor(props){
-    super(props);
-
-  }
-
 
   render() {
-    const {country_data, world_data, country} = this.props;
+    const {country_data, world_data} = this.props;
     const country_data_by_sex = country_data.filter(el => el.sex_id === this.props.sex_id);
+
     const world_data_by_sex = world_data.filter(el => el.sex_id === this.props.sex_id);
+
     const sex = country_data_by_sex.length ? country_data_by_sex[0]['sex_id'] : '';
     const sex_text = sex === 1 ? 'Men' : (sex === 2 ? 'Women' : 'Both Sexes');
 
-    const country_name = country_data_by_sex.length ? country_data_by_sex[0]['location_name'].concat(' Opioid Deaths (1990-2017)\n' + '\n for ').concat(sex_text).toUpperCase() : '';
-
-    const max_domain_country = Math.max.apply(Math, country_data.filter(el => el.sex_id === 1).map(el=>el.upper));
-    const max_domain_world = Math.max.apply(Math, world_data.filter(el => el.sex_id === 1).map(el=>el.upper));
+    const max_domain_country = Math.max.apply(Math, country_data.filter(el => el.sex_id === 1).map(el => el.upper));
+    const max_domain_world = Math.max.apply(Math, world_data.filter(el => el.sex_id === 1).map(el => el.upper));
     const max_domain = Math.max(max_domain_country, max_domain_world);
 
     return (

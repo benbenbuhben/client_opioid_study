@@ -3,19 +3,19 @@ import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 import data from '../assets/modified_data_2.json';
 import Tooltip from './Tooltip';
-import { CSSTransition } from 'react-transition-group';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
 const colorScale = [
-  [0, '#f7fbff'],
-  [0.25, '#deebf7'],
-  [0.5, '#c6dbef'],
-  [1, '#9ecae1'],
-  [2, '#6baed6'],
-  [4, '#4292c6'],
-  [8, '#2171b5'],
-  [16, '#08519c'],
+  [0, '#fff7fb'],
+  [0.25, '#ece7f2'],
+  [0.5, '#d0d1e6'],
+  [1, '#a6bddb'],
+  [2, '#74a9cf'],
+  [4, '#3690c0'],
+  [8, '#0570b0'],
+  [16, '#045a8d'],
+  [32, '#023858'],
 ];
 
 const options = [{
@@ -38,20 +38,22 @@ const options = [{
 }];
 
 export default class Map extends Component {
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
     this.state = {
       active: options[0],
       hoveredCountryId:  null,
+      sex_selection: null,
     };
   }
 
-  setTooltip(features) {
+  setTooltip(features, active) {
     if (features.length && features[0].properties && features[0].properties.sovereignt) {
       ReactDOM.render(
         React.createElement(
           Tooltip, {
             features,
+            active,
           }
         ),
         this.tooltipContainer
@@ -88,6 +90,12 @@ export default class Map extends Component {
         id: 'countries',
         type: 'fill',
         source: 'countries',
+        paint: {
+          'fill-opacity': 0,
+          'fill-opacity-transition': {
+            'duration': 2000,
+          },
+        },
       });
 
       this.map.style.stylesheet.layers.forEach(layer => {
@@ -140,7 +148,7 @@ export default class Map extends Component {
       const features = this.map.queryRenderedFeatures(e.point);
       tooltip.setLngLat(e.lngLat);
       this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-      this.setTooltip(features);
+      this.setTooltip(features, this.state.active);
     });
 
     this.map.on('click', e => {
@@ -174,33 +182,44 @@ export default class Map extends Component {
 
   setFill() {
     const { property, stops } = this.state.active;
+
+    setTimeout(() => {
+      this.map.setPaintProperty('countries', 'fill-opacity', 1);
+    }, 500);
+
     this.map.setPaintProperty('countries', 'fill-color', {
       property,
       stops,
-    });    
+    });   
   }
 
   render() {
     const { name, description, stops, property } = this.state.active;
     const renderLegendKeys = (stop, i) => {
-      return (
-        <div key={i} className='txt-s'>
-          <span className='mr6 round-full w12 h12 inline-block align-middle' style={{ backgroundColor: stop[1] }} />
-          <span>{`${stop[0].toLocaleString()}`}</span>
-        </div>
-      );
+      if(stop[0] <= 16){
+        return (
+          <div key={i} className='txt-s'>
+            <span className='mr6 round-full w12 h12 inline-block align-middle' style={{ backgroundColor: stop[1] }} />
+            <span>{`${stop[0].toLocaleString()}`}</span>
+          </div>
+        );
+      }
     };
 
     const renderOptions = (option, i) => {
       return (
         <label key={i} className="toggle-container">
-          <input onChange={() => this.setState({ active: options[i] })} checked={option.property === property} name="toggle" type="radio" />
+          <input 
+            onChange={() => this.setState({ active: options[i] })} 
+            checked={option.property === property} 
+            name="toggle" 
+            type="radio" />
           <div className="toggle txt-s py3 toggle--active-white">{option.name}</div>
         </label>
       );
     };
 
-    const renderedMap = <div ref={el => this.mapContainer = el} className="relative">
+    const renderedMap = <div ref={el => this.mapContainer = el} className="relative animation-fade-in fade-in">
       <div className="toggle-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
         {options.map(renderOptions)}
       </div>
@@ -210,6 +229,10 @@ export default class Map extends Component {
           <p className='txt-s color-gray'>{description}</p>
         </div>
         {stops.map(renderLegendKeys)}
+        <div key={100} className='txt-s'>
+          <span className='mr6 round-full w12 h12 inline-block align-middle' style={{ backgroundColor: 'black' }} />
+          <span>{`No Data`}</span>
+        </div>
       </div>
     </div>;
 
@@ -218,16 +241,7 @@ export default class Map extends Component {
         <div className="map-header">
           <h2 className="map-header-text">Click on a country to view its infographic.</h2>
         </div>
-        <CSSTransition
-          classNames="results"
-          in={true}
-          appear={true}
-          timeout={500}
-        >
-          {renderedMap}
-        </CSSTransition>
-        
-
+        {renderedMap}
       </React.Fragment>
     );
   }
