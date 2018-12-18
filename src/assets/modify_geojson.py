@@ -39,11 +39,43 @@ for country in dataset:
             country['properties']['opioid_rate_female'] = opioid_rate_female
             country['properties']['opioid_rate_both'] = opioid_rate_both
             country['properties']['opioid_data_location_id'] = str(opioid_data_location_id)
+            country['id'] = opioid_data_location_id = int(df_country[(df['sex_id'] == 3)].iloc[0]['location_id'])
             error = False
+
+            del country['properties']['sov_a3']
+            del country['properties']['adm0_dif']
+            del country['properties']['adm0_a3']
+            del country['properties']['gu_a3']
+            del country['properties']['su_dif']
+            del country['properties']['su_a3']
+            del country['properties']['brk_a3']
+            del country['properties']['brk_group']
+            del country['properties']['name_alt']
+            del country['properties']['pop_est']
+            del country['properties']['gdp_md_est']
+            del country['properties']['pop_year']
+            del country['properties']['lastcensus']
+            del country['properties']['gdp_year']
+            del country['properties']['economy']
+            del country['properties']['income_grp']
+            del country['properties']['wikipedia']
+            del country['properties']['fips_10']
+            del country['properties']['iso_a2']
+            del country['properties']['iso_a3']
+            del country['properties']['iso_n3']
+            del country['properties']['un_a3']
+            del country['properties']['wb_a2']
+            del country['properties']['wb_a3']
+            del country['properties']['woe_id']
+            del country['properties']['adm0_a3_is']
+            del country['properties']['adm0_a3_us']
+            del country['properties']['adm0_a3_un']
+            del country['properties']['adm0_a3_wb']
+            
         except IndexError:
             name_index += 1
 
 data['features'] = dataset
-with open('./modified_data.json', 'w') as outfile:
+with open('./modified_data_2.json', 'w') as outfile:
     json.dump(data, outfile)
     

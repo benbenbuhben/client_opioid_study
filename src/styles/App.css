@@ -26,7 +26,7 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  margin-top: 40vh;
+  margin-top: 37vh;
 }
 
 .line-container {
@@ -42,13 +42,6 @@
   height: 50%;
 }
 
-.button-container {
-  text-align: center;
-}
-
-.button-container button {
-  margin-right:2em;
-}
 
 .map {
   width: 100vw;
@@ -63,6 +56,32 @@
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
 	animation-duration: 1s;
+}
+
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 #page2 {
@@ -87,7 +106,7 @@
 .header{
   position: fixed;
   top:0;
-  height: 200px;
+  height: 150px;
   width: 100%;
   background-color: white;
   z-index: 100000;
@@ -120,7 +139,7 @@
   font-family: 'Adamina', serif;
   width:100%;
   margin:0 auto;
-  margin-top: 130px;
+  margin-top: 45px;
   text-align: center;
   font-size: 45px;
 }
@@ -139,14 +158,14 @@
 .map-header{
   height:70px;
   width: 70%;
-  margin: 30px auto;
+  margin: 0px auto;
   margin-bottom:0px;
   padding-bottom:0px;
   background-color: #08306b;
   border: 1px solid black;
   border-bottom: none;
   text-align: center;
-  padding-top:20px;
+  padding-top:23px;
 }
 
 .map-header-text{
@@ -162,6 +181,13 @@
   margin: 100px auto;
   margin-top:0px;
   border: 1px solid black;
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.mapboxgl-map{
+  opacity: 1;
+  transition: opacity 500ms ease-in;
 }
 
 .country-title{
@@ -174,6 +200,14 @@
   font-size: 35px;
   z-index: 100000 !important;
   color:#08306b;
+}
+
+.button-container{
+  display: flex;
+  justify-content: space-between;
+  width: 23rem;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .sex-button{
@@ -193,11 +227,15 @@
   text-align: center;
   padding: 5px;
   width: 100px;
-  background-color: #9ecae1;
-  color: white;
+  background-color:lightgray;
+  color: #08306b;
 }
 
 .sex-button:focus{
+  outline: none;
+}
+
+.sex-button-focused{
   font-family: 'Adamina', serif;
   letter-spacing: 1.5px;
   text-align: center;
@@ -206,4 +244,36 @@
   background-color: #08306b;
   color: white;
   outline: none;
+}
+
+.results-appear {
+  opacity: 0.01;
+}
+
+.results-appear.results-appear-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.results-enter {
+  opacity: 0.01;
+}
+
+.results-enter.results-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.results-exit {
+  opacity: 1;
+}
+
+.results-exit.results-exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.relative{
+  opacity: 1;
+  transition: opacity 3s ease-in;
 }

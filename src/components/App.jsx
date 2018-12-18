@@ -46,7 +46,7 @@ export default class App extends Component {
           <ClipLoader
             sizeUnit={'px'}
             size={150}
-            color={'#123abc'}
+            color={'#08306b'}
             loading={this.state.loading}
           />
         </div>
