@@ -20,7 +20,9 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    superagent.get('http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com/api/v1/world')
+    const baseURL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:8000' : 'http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com';
+
+    superagent.get(`${baseURL}/api/v1/world`)
       .then(res => {
         const world_data = res.body;
         this.setState({world_data});
@@ -29,7 +31,9 @@ export default class App extends Component {
   }
 
   fetchCountryData(country_id){
-    superagent.get(`http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com/api/v1/country/${country_id}`)
+    const baseURL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:8000' : 'http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com';
+    
+    superagent.get(`${baseURL}/api/v1/country/${country_id}`)
       .then(res => {
         const country_data = res.body;
         this.setState({country_data});
@@ -74,7 +78,7 @@ export default class App extends Component {
           <section id="page1">
             <Map fetchCountryData={this.fetchCountryData}/>
           </section>
-          <section id="page2">
+          <section id="page2" style={{display: country_data.length ? 'block' : 'none' }}>
             <Infographic
               country_data={country_data}
               country={country}

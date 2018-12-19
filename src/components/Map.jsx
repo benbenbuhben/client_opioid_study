@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 import data from '../assets/modified_data_2.json';
 import Tooltip from './Tooltip';
+import '../styles/Map.css';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -151,6 +152,7 @@ export default class Map extends Component {
       this.setTooltip(features, this.state.active);
     });
 
+    // TODO: Fix this so it doesn't throw an error if a country isn't clicked.
     this.map.on('click', e => {
       const features = this.map.queryRenderedFeatures(e.point);
       this.props.fetchCountryData(features[0].properties.opioid_data_location_id);

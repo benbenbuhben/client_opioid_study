@@ -1,0 +1,77 @@
+.scroll-up-button > svg {
+  fill:black !important;
+}
+
+.scroll-up-button:focus {
+  outline: none;
+}
+
+.scroll-up-button:hover {
+  opacity: 1 !important;
+}
+
+.country-title{
+  font-family: 'Adamina', serif;
+  width:100%;
+  margin:0 auto;
+  margin-top:15px;
+  margin-bottom:10px;
+  text-align: center;
+  font-size: 35px;
+  z-index: 100000 !important;
+  color:#08306b;
+}
+
+.rank{
+  font-family: 'Mukta', sans-serif;
+  letter-spacing: 2px;
+  color: gray;
+  width:100%;
+  margin:0 auto;
+  text-align: center;
+  margin-bottom:15px;
+}
+
+.button-container{
+  display: flex;
+  justify-content: space-between;
+  width: 23rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sex-button{
+  font-family: 'Adamina', serif;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  border:1px solid #08306b;
+  background-color: white;
+  color: #08306b;
+}
+
+.sex-button:hover{
+  font-family: 'Adamina', serif;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  background-color:lightgray;
+  color: #08306b;
+}
+
+.sex-button:focus{
+  outline: none;
+}
+
+.sex-button-focused{
+  font-family: 'Adamina', serif;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  background-color: #08306b;
+  color: white;
+  outline: none;
+}

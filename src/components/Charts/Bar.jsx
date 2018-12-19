@@ -14,7 +14,9 @@ export default class Bar extends Component {
   }
 
   componentDidMount(){
-    superagent.get('http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com/api/v1/top_countries')
+    const baseURL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:8000' : 'http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com';
+    
+    superagent.get(`${baseURL}/api/v1/top_countries`)
       .then(res => {
         let top_countries = res.body;
         this.setState({top_countries});

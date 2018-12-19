@@ -48,61 +48,6 @@
   height: 100vh;
 }
 
-#page1 {
-  width: 100%;
-  height: 100vh;
-  margin-top: 200px;
-  animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 1s;
-}
-
-.fade-in {
-	opacity: 1;
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 2s;
-}
-
-@keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
-@keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-
-#page2 {
-  height: calc(100vh - 200px);
-  overflow:scroll;
-  margin-top: 80px;
-  /* margin-bottom:40px; */
-}
-
-.scroll-up-button > svg {
-  fill:black !important;
-}
-
-.scroll-up-button:focus {
-  outline: none;
-}
-
-.scroll-up-button:hover {
-  opacity: 1 !important;
-}
-
 .header{
   position: fixed;
   top:0;
@@ -155,96 +100,50 @@
   font-size: 15px;
 }
 
-.map-header{
-  height:70px;
-  width: 70%;
-  margin: 0px auto;
-  margin-bottom:0px;
-  padding-bottom:0px;
-  background-color: #08306b;
-  border: 1px solid black;
-  border-bottom: none;
-  text-align: center;
-  padding-top:23px;
+#page1 {
+  width: 100%;
+  height: calc(100vh - 150px);
+  margin-top: 150px;
+  animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 1s;
 }
 
-.map-header-text{
-  font-family: 'Adamina', serif;
-  color:white;
-  font-size:20px;
-  margin-left:25px;
+#page2 {
+  height: calc(100vh - 150px);
+  overflow:scroll;
+  margin-top: 10px;
+  /* margin-bottom:40px; */
 }
 
-.mapboxgl-map {
-  width: 70%;
-  height: 60vh;
-  margin: 100px auto;
-  margin-top:0px;
-  border: 1px solid black;
-  opacity: 1;
-  transition: opacity 500ms ease-in;
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 2s;
 }
 
-.mapboxgl-map{
-  opacity: 1;
-  transition: opacity 500ms ease-in;
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
-.country-title{
-  font-family: 'Adamina', serif;
-  width:100%;
-  margin:0 auto;
-  margin-top:15px;
-  margin-bottom:15px;
-  text-align: center;
-  font-size: 35px;
-  z-index: 100000 !important;
-  color:#08306b;
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
-.button-container{
-  display: flex;
-  justify-content: space-between;
-  width: 23rem;
-  margin: 0 auto;
-  text-align: center;
-}
 
-.sex-button{
-  font-family: 'Adamina', serif;
-  letter-spacing: 1.5px;
-  text-align: center;
-  padding: 5px;
-  width: 100px;
-  border:1px solid #08306b;
-  background-color: white;
-  color: #08306b;
-}
-
-.sex-button:hover{
-  font-family: 'Adamina', serif;
-  letter-spacing: 1.5px;
-  text-align: center;
-  padding: 5px;
-  width: 100px;
-  background-color:lightgray;
-  color: #08306b;
-}
-
-.sex-button:focus{
-  outline: none;
-}
-
-.sex-button-focused{
-  font-family: 'Adamina', serif;
-  letter-spacing: 1.5px;
-  text-align: center;
-  padding: 5px;
-  width: 100px;
-  background-color: #08306b;
-  color: white;
-  outline: none;
-}
 
 .results-appear {
   opacity: 0.01;
