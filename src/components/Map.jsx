@@ -46,7 +46,7 @@ export default class Map extends Component {
     this.state = {
       active: options[0],
       hoveredCountryId:  null,
-      sex_selection: null,
+      sexSelection: null,
       value: 2017,
     };
 

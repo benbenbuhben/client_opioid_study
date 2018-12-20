@@ -6,13 +6,13 @@ import { VictoryChart, VictoryAxis, VictoryLine, VictoryLegend, VictoryLabel, Vi
 export default class Line extends Component {
 
   render() {
-    const {country_data, world_data, sex_id, country_data_by_sex, sex_text} = this.props;
+    const {countryData, worldData, sexID, countryDataBySex, sexText} = this.props;
 
-    const world_data_by_sex = world_data.filter(el => el.sex_id === sex_id);
+    const worldDataBySex = worldData.filter(el => el.sex_id === sexID);
 
-    const max_domain_country = Math.max.apply(Math, country_data.filter(el => el.sex_id === 1).map(el => el.upper));
-    const max_domain_world = Math.max.apply(Math, world_data.filter(el => el.sex_id === 1).map(el => el.upper));
-    const max_domain = Math.max(max_domain_country, max_domain_world);
+    const maxDomainCountry = Math.max.apply(Math, countryData.filter(el => el.sex_id === 1).map(el => el.upper));
+    const maxDomainWorld = Math.max.apply(Math, worldData.filter(el => el.sex_id === 1).map(el => el.upper));
+    const maxDomain = Math.max(maxDomainCountry, maxDomainWorld);
 
     return (
       <div className="line-container">
@@ -20,7 +20,7 @@ export default class Line extends Component {
           className="line" 
           width={600} 
           height={449} 
-          maxDomain={{y: max_domain }} 
+          maxDomain={{y: maxDomain }} 
           scale={{ x: 'time' }}
           animate={{ duration: 1500 }}
           style={{
@@ -31,7 +31,7 @@ export default class Line extends Component {
           }}
         >
           <VictoryLabel 
-            text={'Opioid Deaths (1990-2017) for '.concat(sex_text).toUpperCase() } 
+            text={'Opioid Deaths (1990-2017) for '.concat(sexText).toUpperCase() } 
             x={250} 
             dx={65}
             y={30} 
@@ -103,7 +103,7 @@ export default class Line extends Component {
               },
             }}
             data={[
-              { name: country_data_by_sex.length ? country_data_by_sex[0]['location_name'] : '', symbol: { fill: '#4292c6', type: 'minus' } },
+              { name: countryDataBySex.length ? countryDataBySex[0]['location_name'] : '', symbol: { fill: '#4292c6', type: 'minus' } },
               { name: 'World', symbol: { fill: 'black', type: 'minus' } },
             ]}
           />
@@ -115,11 +115,10 @@ export default class Line extends Component {
                 paddingTop: '10px',
               },
             }}
-            data={country_data_by_sex.map(el => ({x: new Date(el.year, 1, 1), y: +el.val}))}
-            animate={{ duration: 1500 }}
+            data={countryDataBySex.map(el => ({x: new Date(el.year, 1, 1), y: +el.val}))}
           />
           <VictoryArea
-            data={country_data_by_sex.map(el => ({x: new Date(el.year, 1, 1), y: +el.upper, y0: +el.lower}))}
+            data={countryDataBySex.map(el => ({x: new Date(el.year, 1, 1), y: +el.upper, y0: +el.lower}))}
             style={{ data: { fill: '#4292c6', opacity:0.2 } }}
           />
           <VictoryLine
@@ -127,10 +126,10 @@ export default class Line extends Component {
               data: { stroke: '#08306b' },
               parent: { border: '1px solid #4292c6'},
             }}
-            data={world_data_by_sex.map(el => ({x: new Date(el.year, 1, 1), y: +el.val}))}
+            data={worldDataBySex.map(el => ({x: new Date(el.year, 1, 1), y: +el.val}))}
           />
           <VictoryArea
-            data={world_data_by_sex.map(el => ({x: new Date(el.year, 1, 1), y: +el.upper, y0: +el.lower}))}
+            data={worldDataBySex.map(el => ({x: new Date(el.year, 1, 1), y: +el.upper, y0: +el.lower}))}
             style={{ data: { fill: 'black', opacity:0.2 } }}
           />
         </VictoryChart>

@@ -14,34 +14,34 @@ export default class Bar extends Component {
   render() {
     console.log('Bar component re-rendered!');
     let label_text;
-    // let {top_countries} = this.state;
-    let {country, country_data, sex_id, top_countries, country_data_by_sex, sex_text} = this.props;
+    // let {topCountries} = this.state;
+    let {country, countryData, sexID, topCountries, countryDataBySex, sexText} = this.props;
 
-    
+    console.log(topCountries);
 
-    country_data = country_data.filter(el=> el.year === 2017 && el.sex_id === sex_id)[0];
+    countryData = countryData.filter(el=> el.year === 2017 && el.sex_id === sexID)[0];
 
-    top_countries = top_countries.filter(el => el.sex_id === sex_id).sort((a,b) => (parseFloat(a.val) > parseFloat(b.val)) ? 1 : ((parseFloat(b.val) > parseFloat(a.val)) ? -1 : 0)); 
+    topCountries = topCountries.filter(el => el.sex_id === sexID).sort((a,b) => (parseFloat(a.val) > parseFloat(b.val)) ? 1 : ((parseFloat(b.val) > parseFloat(a.val)) ? -1 : 0)); 
 
-    let top_countries_as_list = top_countries.filter(el => el.sex_id === sex_id).map(el => el.location_name).reverse();
+    let topCountriesAsList = topCountries.filter(el => el.sex_id === sexID).map(el => el.location_name).reverse();
 
 
-    if(country && !top_countries_as_list.includes(country)){
-      top_countries.push(country_data);
-      label_text = `IN RELATION TO 2017 TOP 20 (${sex_text.toUpperCase()})`; 
+    if(country && !topCountriesAsList.includes(country)){
+      topCountries.push(countryData);
+      label_text = `IN RELATION TO 2017 TOP 20 (${sexText.toUpperCase()})`; 
     }
     else if (country){
-      top_countries = top_countries.filter(el => el.location_name !== country);
-      top_countries.push(country_data);
-      label_text = `IN RELATION TO 2017 TOP 20 (${sex_text.toUpperCase()})`; 
+      topCountries = topCountries.filter(el => el.location_name !== country);
+      topCountries.push(countryData);
+      label_text = `IN RELATION TO 2017 TOP 20 (${sexText.toUpperCase()})`; 
     }
 
-    console.log(top_countries);
+    console.log(topCountries);
 
 
-    let num_countries = top_countries.length;
+    let num_countries = topCountries.length;
 
-    if(num_countries && top_countries){
+    if(num_countries && topCountries){
       return (
         <div className="bar-container">
           <VictoryChart  
@@ -73,7 +73,7 @@ export default class Bar extends Component {
             />
             <VictoryBar horizontal
               barRatio={0.6}
-              data={top_countries.map((el, i)=>({x: i + 1, y: parseFloat(el.val), country: el.location_name}))}
+              data={topCountries.map((el, i)=>({x: i + 1, y: parseFloat(el.val), country: el.location_name}))}
               padding={{top: 50, left: 0}}
               style={{
                 data: { 
@@ -92,7 +92,7 @@ export default class Bar extends Component {
               labels={d => parseFloat(d.y).toFixed(2)}
             />
             <VictoryAxis dependentAxis
-              tickValues={top_countries.map(el=>el.location_name)}
+              tickValues={topCountries.map(el=>el.location_name)}
               style={{
                 data: { fill: '#08306b' }, 
                 axisLabel: {
