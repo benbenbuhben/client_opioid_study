@@ -18,11 +18,24 @@
   margin-left:25px;
 }
 
+.map-footer {
+  height:50px;
+  width: 70%;
+  margin: 0px auto;
+  margin-bottom:0px;
+  padding-bottom:0px;
+  background-color: white;
+  border: 1px solid black;
+  border-top: none;
+  text-align: center;
+  /* padding-top:23px; */
+}
+
 .mapboxgl-map {
   width: 70%;
   height: 60vh;
-  margin: 100px auto;
-  margin-top:0px;
+  margin: 0 auto;
+  /* margin-top:0px; */
   border: 1px solid black;
   opacity: 1;
   transition: opacity 500ms ease-in;
@@ -32,3 +45,4 @@
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
+

@@ -29,16 +29,21 @@ for country in dataset:
         
         try:
             country_name = country['properties'][country_name_fields[name_index]]
-            df_country = df[(df['location_name'] == country_name) & (df['year'] == 2017)]
-            opioid_rate_male = df_country[(df['sex_id'] == 1)].iloc[0]['val']
-            opioid_rate_female = df_country[(df['sex_id'] == 2)].iloc[0]['val']
-            opioid_rate_both = df_country[(df['sex_id'] == 3)].iloc[0]['val']
+            for year in range(1990, 2018):
+                df_country = df[(df['location_name'] == country_name) & (df['year'] == year)]
+                opioid_rate_male = df_country[(df['sex_id'] == 1)].iloc[0]['val']
+                opioid_rate_female = df_country[(df['sex_id'] == 2)].iloc[0]['val']
+                opioid_rate_both = df_country[(df['sex_id'] == 3)].iloc[0]['val']
+                
+                # Might need to convert from float/decimal
+                country['properties']['opioid_rate_male_{}'.format(year)] = opioid_rate_male
+                country['properties']['opioid_rate_female_{}'.format(year)] = opioid_rate_female
+                country['properties']['opioid_rate_both_{}'.format(year)] = opioid_rate_both
+
             opioid_data_location_id = df_country[(df['sex_id'] == 3)].iloc[0]['location_id']
-            # Might need to convert from float/decimal
-            country['properties']['opioid_rate_male'] = opioid_rate_male
-            country['properties']['opioid_rate_female'] = opioid_rate_female
-            country['properties']['opioid_rate_both'] = opioid_rate_both
+
             country['properties']['opioid_data_location_id'] = str(opioid_data_location_id)
+
             country['id'] = opioid_data_location_id = int(df_country[(df['sex_id'] == 3)].iloc[0]['location_id'])
             error = False
 
@@ -76,6 +81,6 @@ for country in dataset:
             name_index += 1
 
 data['features'] = dataset
-with open('./modified_data_2.json', 'w') as outfile:
+with open('./modified_data_3.json', 'w') as outfile:
     json.dump(data, outfile)
     

@@ -1,54 +1,43 @@
 import React, { Component } from 'react';
 import { VictoryChart, VictoryAxis,  VictoryLabel, VictoryBar } from 'victory';
-import superagent from 'superagent';
+
 
 
 // Convert this to a stateless (function-based) component. Move componentDidMount call to app and pass down as props.
 export default class Bar extends Component {
   constructor(props) {
     super(props);
-  
-    this.state = {
-      top_countries: [],
-    };
   }
 
-  componentDidMount(){
-    const baseURL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:8000' : 'http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com';
-    
-    superagent.get(`${baseURL}/api/v1/top_countries`)
-      .then(res => {
-        let top_countries = res.body;
-        this.setState({top_countries});
-      });
-  }
+
   
   render() {
+    console.log('Bar component re-rendered!');
     let label_text;
-    let {top_countries} = this.state;
-    let {country, country_data} = this.props;
+    // let {top_countries} = this.state;
+    let {country, country_data, sex_id, top_countries, country_data_by_sex, sex_text} = this.props;
 
-    const country_data_by_sex = country_data.filter(el => el.sex_id === this.props.sex_id);
     
-    const sex = country_data_by_sex.length ? country_data_by_sex[0]['sex_id'] : '';
-    const sex_text = sex === 1 ? 'Men' : (sex === 2 ? 'Women' : 'Both Sexes');
 
-    country_data = country_data.filter(el=> el.year === 2017 && el.sex_id === this.props.sex_id)[0];
+    country_data = country_data.filter(el=> el.year === 2017 && el.sex_id === sex_id)[0];
 
-    top_countries = top_countries.filter(el => el.sex_id === this.props.sex_id).sort((a,b) => (parseFloat(a.val) > parseFloat(b.val)) ? 1 : ((parseFloat(b.val) > parseFloat(a.val)) ? -1 : 0)); 
+    top_countries = top_countries.filter(el => el.sex_id === sex_id).sort((a,b) => (parseFloat(a.val) > parseFloat(b.val)) ? 1 : ((parseFloat(b.val) > parseFloat(a.val)) ? -1 : 0)); 
 
-    let top_countries_as_list = top_countries.filter(el => el.sex_id === this.props.sex_id).map(el => el.location_name).reverse();
+    let top_countries_as_list = top_countries.filter(el => el.sex_id === sex_id).map(el => el.location_name).reverse();
 
 
     if(country && !top_countries_as_list.includes(country)){
       top_countries.push(country_data);
-      label_text = `IN RELATION TO TOP 25 ( ${sex_text.toUpperCase()})`; 
+      label_text = `IN RELATION TO 2017 TOP 20 (${sex_text.toUpperCase()})`; 
     }
     else if (country){
       top_countries = top_countries.filter(el => el.location_name !== country);
       top_countries.push(country_data);
-      label_text = `IN RELATION TO TOP 25 ( ${sex_text.toUpperCase()})`; 
+      label_text = `IN RELATION TO 2017 TOP 20 (${sex_text.toUpperCase()})`; 
     }
+
+    console.log(top_countries);
+
 
     let num_countries = top_countries.length;
 
@@ -58,22 +47,26 @@ export default class Bar extends Component {
           <VictoryChart  
             domain={{ x: [0, 21], y: [0.5, num_countries] }} 
             domainPadding={{ x: 0, y: 10 }} 
-            padding={{left: 100, bottom:50, top:50}}
+            padding={{left: 105, bottom:25, top:19, right:20}}
             width={600} height={400}
             style={{
-              border:'1px solid black',
+              parent: {
+                border: '1px solid #ccc',
+                boxShadow: '0.7px 0.7px 0.7px 0.7px #cfcfcf',
+              },
             }}
-            animate={{ duration: 2000 }}
+            animate={{ duration: 1500 }}
           >
             <VictoryLabel 
               text={label_text}
               dx={180}
               x={150} 
-              y={30} 
+              y={0} 
+              dy={-5}
               textAnchor="middle"
               style={{
                 fontFamily:'\'Adamina\', sans-serif',
-                fontSize:'12px',
+                fontSize:'14px',
                 fill:'#08306b',
                 letterSpacing:'1.5px',
               }}
@@ -81,23 +74,36 @@ export default class Bar extends Component {
             <VictoryBar horizontal
               barRatio={0.6}
               data={top_countries.map((el, i)=>({x: i + 1, y: parseFloat(el.val), country: el.location_name}))}
-              padding={{top: 50}}
+              padding={{top: 50, left: 0}}
               style={{
                 data: { 
                   fill: d => d.country === country ? '#4292c6' : '#08306b', opacity:'0.8',
-                  fontFamily:'\'Mukta\', sans-serif', fontSize: '8px',
+                  fontFamily:'\'Mukta\', sans-serif', 
+                  fontSize: '9px',
+                  fontWeight: '600',
+                  letterSpacing: '1.2px',
                 },
-                labels: {fontFamily:'\'Mukta\', sans-serif', fontSize: '8px'},
+                labels: {
+                  fontFamily:'\'Mukta\', sans-serif', 
+                  fontSize: '9px', 
+                },
               }}
-              animate={{ duration: 2000 }}
+              animate={{ duration: 1500 }}
               labels={d => parseFloat(d.y).toFixed(2)}
             />
             <VictoryAxis dependentAxis
               tickValues={top_countries.map(el=>el.location_name)}
               style={{
                 data: { fill: '#08306b' }, 
+                axisLabel: {
+                  fontFamily:'\'Mukta\', sans-serif', 
+                  fontSize: '13px', 
+                  fontWeight: '400',
+                  padding: 30},
                 tickLabels: {
-                  fontFamily:'\'Mukta\', sans-serif', fontSize: '8px',
+                  fontFamily:'\'Mukta\', sans-serif', 
+                  fontSize: '10px',
+                  fontWeight: '400',
                 },
               }}
             />  
@@ -106,10 +112,18 @@ export default class Bar extends Component {
               tickFormat={[null, 2, null, 4, null, 6, null, 8, null, 10, null, 12, null, 14, null, 16, null, 18, null, 20]}
               style={{
                 axis: {stroke: '#756f6a'},
-                axisLabel: {fontFamily:'\'Mukta\', sans-serif', fontSize: 10, padding: 30},
+                axisLabel: {
+                  fontFamily:'\'Mukta\', sans-serif', 
+                  fontSize: 16, 
+                  fontWeight: '400',
+                  padding: 30},
                 grid: {stroke: 'grey', opacity:0.4},
                 ticks: {stroke: 'grey', size: 5},
-                tickLabels: {fontFamily:'\'Mukta\', sans-serif', fontSize: 10, padding: 5}, 
+                tickLabels: {
+                  fontFamily:'\'Mukta\', sans-serif', 
+                  fontSize: 14, 
+                  fontWeight: '300',
+                  padding: 5}, 
               }}
             />  
           </VictoryChart>

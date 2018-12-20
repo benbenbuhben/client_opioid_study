@@ -8,6 +8,7 @@
     "react-dom": "^16.6.3",
     "react-hamburger-menu": "^1.1.1",
     "react-player-controls": "^1.0.0-beta.0",
+    "react-rangeslider": "^2.2.0",
     "react-scripts": "2.1.1",
     "react-scroll-to-component": "^1.0.2",
     "react-scroll-up-button": "^1.6.4",
