@@ -11,8 +11,8 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      country_data: [],
-      world_data: [],
+      countryData: [],
+      worldData: [],
       loading: true,
     };
 
@@ -20,25 +20,29 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    superagent.get('http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com/api/v1/world')
+    const baseURL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:8000' : 'http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com';
+
+    superagent.get(`${baseURL}/api/v1/world`)
       .then(res => {
-        const world_data = res.body;
-        this.setState({world_data});
+        const worldData = res.body;
+        this.setState({worldData});
         this.setState({loading:false});
       });
   }
 
   fetchCountryData(country_id){
-    superagent.get(`http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com/api/v1/country/${country_id}`)
+    const baseURL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:8000' : 'http://ihme-env.22u24hwmvk.us-west-2.elasticbeanstalk.com';
+    
+    superagent.get(`${baseURL}/api/v1/country/${country_id}`)
       .then(res => {
-        const country_data = res.body;
-        this.setState({country_data});
+        const countryData = res.body;
+        this.setState({countryData});
       });
   }
 
   render() {
-    const {country_data, world_data} = this.state;
-    const country = country_data.length ? country_data[0]['location_name'] : '';
+    const {countryData, worldData} = this.state;
+    const country = countryData.length ? countryData[0]['location_name'] : '';
 
     if(this.state.loading){
       return(
@@ -74,11 +78,11 @@ export default class App extends Component {
           <section id="page1">
             <Map fetchCountryData={this.fetchCountryData}/>
           </section>
-          <section id="page2">
+          <section id="page2" style={{display: countryData.length ? 'block' : 'none' }}>
             <Infographic
-              country_data={country_data}
+              countryData={countryData}
               country={country}
-              world_data={world_data}
+              worldData={worldData}
             />
           </section>        
         </div>

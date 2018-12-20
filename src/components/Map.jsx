@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import mapboxgl from 'mapbox-gl';
 import data from '../assets/modified_data_2.json';
 import Tooltip from './Tooltip';
+import '../styles/Map.css';
+// import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 
@@ -43,8 +46,17 @@ export default class Map extends Component {
     this.state = {
       active: options[0],
       hoveredCountryId:  null,
-      sex_selection: null,
+      sexSelection: null,
+      value: 2017,
     };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange = value => {
+    this.setState({
+      value: value,
+    });
   }
 
   setTooltip(features, active) {
@@ -151,6 +163,7 @@ export default class Map extends Component {
       this.setTooltip(features, this.state.active);
     });
 
+    // TODO: Fix this so it doesn't throw an error if a country isn't clicked.
     this.map.on('click', e => {
       const features = this.map.queryRenderedFeatures(e.point);
       this.props.fetchCountryData(features[0].properties.opioid_data_location_id);
@@ -195,6 +208,7 @@ export default class Map extends Component {
 
   render() {
     const { name, description, stops, property } = this.state.active;
+    
     const renderLegendKeys = (stop, i) => {
       if(stop[0] <= 16){
         return (
@@ -242,6 +256,18 @@ export default class Map extends Component {
           <h2 className="map-header-text">Click on a country to view its infographic.</h2>
         </div>
         {renderedMap}
+        {/* <div className="map-footer">
+          <div className='slider-horizontal'>
+            <Slider
+              min={1990}
+              max={2017}
+              value={this.state.value}
+              orientation='horizontal'
+              onChange={this.handleChange}
+            />
+            
+          </div>
+        </div> */}
       </React.Fragment>
     );
   }
